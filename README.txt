@@ -1,2 +1,2 @@
-wasuuuuuuuuu - Nico Ordonez
+wasuuuuuuuuu - Nicolas Ordonez
 Uwu owo - Fabian Sanchez Suarez
