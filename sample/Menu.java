@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -41,6 +43,9 @@ public class Menu extends BorderPane {
     private Button addFoodButton;
     private Button checkOutButton;
     private Button searchButton;
+    
+    private Stage mainStage;
+
 
 
 
@@ -64,6 +69,8 @@ public class Menu extends BorderPane {
         checkOutButton = new Button("Go to Checkout");
         searchButton =  new Button("Search");
         searchButton.setOnAction(new searchButtonHandler());
+        checkOutButton.setOnAction(new checkOutButtonHandler());
+
 
 
         //labels
@@ -512,6 +519,7 @@ public class Menu extends BorderPane {
 
             ArrayList<MenuList> search = new ArrayList<MenuList>();
             ArrayList<MenuList> found = new ArrayList<MenuList>();
+
             ArrayList<MenuList> found1 = new ArrayList<MenuList>();
 
             if (searchTextField.getText().equals("")) {
@@ -546,8 +554,11 @@ public class Menu extends BorderPane {
 
                         found.add(search.get(i));
 
+
                     }
                 }
+
+                foodItems = found;
 
                 foodItems.clear();
                 foodItems = found;
@@ -560,11 +571,13 @@ public class Menu extends BorderPane {
 
                     if (search.get(i).toString().contains(searchTextField.getText())) {
 
+                        found.add(search.get(i));
                         found1.add(search.get(i));
 
                     }
                 }
 
+                drinkItems = found;
                 drinkItems.clear();
                 drinkItems = found1;
 
@@ -583,6 +596,23 @@ public class Menu extends BorderPane {
         }
 
 
+    }
+    
+    private class checkOutButtonHandler implements EventHandler<ActionEvent>{
+    	public void handle(ActionEvent buttonClick) {
+    		reviewOrder checkOut = null;
+    		checkOut = new reviewOrder();
+   		 Scene scene = new Scene(checkOut, 900, 400);
+
+   		 /*Color color = Color.rgb(186,255,245);
+   		 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+   		 Background background = new Background(backgroundFill);
+   		 checkOut.setBackground(background);*/
+
+   		 mainStage.setScene(scene);
+    		//hi everyone welcome to my java tutorial
+    	}
+    	 
     }
 
 }
