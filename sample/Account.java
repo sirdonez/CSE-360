@@ -2,22 +2,21 @@ package sample;
 
 
 public class Account {
-	
+
 	private String username;
     private String password;
     private String email;
     private boolean isAdmin;
     private int creditCardNumber;
-    
-    
+
     //Constructor
     public Account(String username, String password, String email, boolean isAdmin) {
-    	
+
     	this.username = username;
     	this.password = password;
     	this.email = email;
     	this.isAdmin = isAdmin;
-    	
+
     }
     
     public void setCreditCardNumber(int creditCardNumber) {
