@@ -605,7 +605,7 @@ public class Menu extends BorderPane {
     	public void handle(ActionEvent buttonClick) {
 
     		ReviewOrder checkOut = new ReviewOrder(mainStage);
-   		
+
     	}
     	 
     }
