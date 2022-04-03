@@ -108,7 +108,7 @@ public class Login extends Application {
             	 incorrectLoginInfoLabel.setText("Correct Password");
 				 Menu menu = null;
 				 try {
-					 menu = new Menu();
+					 menu = new Menu(mainStage);
 				 } catch (FileNotFoundException | URISyntaxException e) {
 					 e.printStackTrace();
 				 }
