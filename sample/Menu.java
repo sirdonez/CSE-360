@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -42,6 +43,8 @@ public class Menu extends BorderPane {
     private Button checkOutButton;
     private Button searchButton;
 
+    Stage mainStage;
+
 
 
     public Menu(Stage mainStage) throws FileNotFoundException, URISyntaxException {
@@ -64,6 +67,7 @@ public class Menu extends BorderPane {
         //buttons
         addFoodButton = new Button("Add Meals");
         checkOutButton = new Button("Go to Checkout");
+        checkOutButton.setOnAction(new checkOutButtonHandler());
         searchButton =  new Button("Search");
         searchButton.setOnAction(new searchButtonHandler());
 
@@ -514,6 +518,7 @@ public class Menu extends BorderPane {
 
             ArrayList<MenuList> search = new ArrayList<MenuList>();
             ArrayList<MenuList> found = new ArrayList<MenuList>();
+            ArrayList<MenuList> found1 = new ArrayList<MenuList>();
 
             if (searchTextField.getText().equals("")) {
 
@@ -559,13 +564,13 @@ public class Menu extends BorderPane {
 
                     if (search.get(i).toString().contains(searchTextField.getText())) {
 
-                        found.add(search.get(i));
+                        found1.add(search.get(i));
                         System.out.println(search.get(i).toString());
 
                     }
                 }
 
-                drinkItems = found;
+                drinkItems = found1;
                 mainPaneInScroll.getChildren().clear();
 
                 try {
