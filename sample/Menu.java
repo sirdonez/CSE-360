@@ -49,8 +49,10 @@ public class Menu extends BorderPane {
 
 
 
-    public Menu() throws FileNotFoundException, URISyntaxException {
+    public Menu(Stage mainStage) throws FileNotFoundException, URISyntaxException {
 
+
+        this.mainStage = mainStage;
         //main box
         mainPaneInScroll = new VBox();
         mainPaneInScroll.setMinWidth(1400);
@@ -599,18 +601,11 @@ public class Menu extends BorderPane {
     }
     
     private class checkOutButtonHandler implements EventHandler<ActionEvent>{
+
     	public void handle(ActionEvent buttonClick) {
-    		reviewOrder checkOut = null;
-    		checkOut = new reviewOrder();
-   		 Scene scene = new Scene(checkOut, 900, 400);
 
-   		 /*Color color = Color.rgb(186,255,245);
-   		 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-   		 Background background = new Background(backgroundFill);
-   		 checkOut.setBackground(background);*/
-
-   		 mainStage.setScene(scene);
-    		//hi everyone welcome to my java tutorial
+    		ReviewOrder checkOut = new ReviewOrder(mainStage);
+   		
     	}
     	 
     }
