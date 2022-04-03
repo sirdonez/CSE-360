@@ -25,6 +25,7 @@ public class Login extends Application {
     private TextField passwordTextField;
     private Button loginButton;
     private Button createAccButton;
+    private Button cancelAccountButton;
     
     //Find a way to share one accountList object amongst all the classes
 	private ArrayList<Account> accountList;
@@ -68,16 +69,19 @@ public class Login extends Application {
 
 
 		//Button Pane
-		BorderPane buttonPane = new BorderPane();
-		this.loginButton = new Button("Login");
-		this.loginButton.setOnAction(new LoginButtonHandler());
-		buttonPane.setLeft(this.loginButton);
+		HBox buttonPane = new HBox();
+		loginButton = new Button("Login");
+		loginButton.setOnAction(new LoginButtonHandler());
 		
 		createAccButton = new Button("Create Account");
 		createAccButton.setOnAction(new createAccButtonHandler());
-		buttonPane.setCenter(this.createAccButton);
 
-		
+		cancelAccountButton = new Button("Guest");
+		cancelAccountButton.setOnAction(new cancelButtonHandler());
+
+		buttonPane.getChildren().addAll(loginButton, cancelAccountButton, createAccButton);
+		buttonPane.setSpacing(30);
+
 		mainVBox.getChildren().addAll(incorrectLoginInfoLabel, loginPane, buttonPane);
 		mainVBox.setSpacing(10);
 		mainVBox.setPadding(new Insets(20, 0, 0, 20));		
@@ -150,9 +154,32 @@ public class Login extends Application {
     	  	 }
     		 
     	 }
-    	 
-    	 
-    	 
+
+
+	private class cancelButtonHandler implements EventHandler<ActionEvent>
+	{
+		public void handle(ActionEvent buttonClick)
+		{
+			Menu menu = null;
+
+
+			try {
+				menu = new Menu(mainStage);
+			} catch (FileNotFoundException | URISyntaxException e) {
+				e.printStackTrace();
+			}
+			Scene scene = new Scene(menu, 900, 400);
+
+			Color color = Color.rgb(186,255,245);
+			BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+			Background background = new Background(backgroundFill);
+			menu.setBackground(background);
+
+			mainStage.setScene(scene);
+		}
+	}
+
+
     	 public boolean searchAccounts(String username, String password) {
 
     			boolean isFound = false;
