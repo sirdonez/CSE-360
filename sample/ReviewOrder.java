@@ -18,7 +18,7 @@ import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-public class reviewOrder extends VBox{
+public class ReviewOrder extends VBox{
 	
 	
 	private Label linePositionLabel;
@@ -51,15 +51,13 @@ public class reviewOrder extends VBox{
 	private Stage primaryStage;
 	
 	
-	public reviewOrder() {
+	public ReviewOrder(Stage stage) {
+
+		primaryStage = stage;
+
 		title = new Text("Check Out");
 		ArrayList<Ingredients> bread = new ArrayList<Ingredients>();
-		/*Image image1 = new Image(new File("C:\\Users\\Nico\\Desktop\\x.jpg").toURI().toURL().toExternalForm());
-		orderList.add(new MenuList("Bread Loafs", bread, 2.00, image));
-		
-		for(int i = 0; i < orderList.size(); i++) {
-			
-		}*/
+
 		coupon = "1234";
 		totalPrice = 3.43;
 		items = "2 Number nine(s)\n1 Number nine(s) Large";
@@ -78,7 +76,7 @@ public class reviewOrder extends VBox{
 		backButton = new Button("Back");
 		addCoupon = new Button("Add Coupon");
 		this.addCoupon.setOnAction(new addCouponHandler());
-		primaryStage = new Stage();
+
 		
 		VBox root = new VBox();
 		root.setSpacing(8);

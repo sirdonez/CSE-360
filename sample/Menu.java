@@ -44,8 +44,10 @@ public class Menu extends BorderPane {
 
 
 
-    public Menu() throws FileNotFoundException, URISyntaxException {
+    public Menu(Stage mainStage) throws FileNotFoundException, URISyntaxException {
 
+
+        this.mainStage = mainStage;
         //main box
         mainPaneInScroll = new VBox();
         mainPaneInScroll.setMinWidth(1400);
@@ -578,6 +580,16 @@ public class Menu extends BorderPane {
         }
 
 
+    }
+    
+    private class checkOutButtonHandler implements EventHandler<ActionEvent>{
+
+    	public void handle(ActionEvent buttonClick) {
+
+    		ReviewOrder checkOut = new ReviewOrder(mainStage);
+
+    	}
+    	 
     }
 
 }
