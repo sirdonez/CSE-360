@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
@@ -17,13 +18,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 
-
 public class Login extends Application {
 
 	private Label incorrectLoginInfoLabel;
 	private TextField usernameTextField;
     private TextField passwordTextField;
     private Button loginButton;
+    private Button createAccButton;
     
     //Find a way to share one accountList object amongst all the classes
 	private ArrayList<Account> accountList;
@@ -71,8 +72,12 @@ public class Login extends Application {
 		this.loginButton = new Button("Login");
 		this.loginButton.setOnAction(new LoginButtonHandler());
 		buttonPane.setLeft(this.loginButton);
+		
+		createAccButton = new Button("Create Account");
+		createAccButton.setOnAction(new createAccButtonHandler());
+		buttonPane.setCenter(this.createAccButton);
 
-
+		
 		mainVBox.getChildren().addAll(incorrectLoginInfoLabel, loginPane, buttonPane);
 		mainVBox.setSpacing(10);
 		mainVBox.setPadding(new Insets(20, 0, 0, 20));		
@@ -131,6 +136,22 @@ public class Login extends Application {
 
     	 }
     	 
+    }
+    	 
+    private class createAccButtonHandler implements EventHandler<ActionEvent> 
+    	 {
+    		 public void handle(ActionEvent buttonClick) 
+    	  	 {
+    			 
+    			 CreateAccount testing = new CreateAccount(mainStage);
+    			 Scene scene = new Scene(testing, 900, 400);
+    			 mainStage.setScene(scene); 
+    			 
+    	  	 }
+    		 
+    	 }
+    	 
+    	 
     	 
     	 public boolean searchAccounts(String username, String password) {
 
@@ -153,7 +174,12 @@ public class Login extends Application {
 
     	 }
 
+    
+
+    public ArrayList<Account> getLogin()
+    {
+    	return accountList;
     }
-
-
+    
+    
 }
