@@ -137,7 +137,7 @@ public class CreateAccount extends BorderPane {
 	        	   incorrectLabel.setText("Account has been created!"); 
 	        	   Menu menu = null;
 	  			   try {
-	  				   menu = new Menu();
+	  				   menu = new Menu(primaryStage);
 	  			   } catch (FileNotFoundException | URISyntaxException e) {
 	  				 e.printStackTrace();
 	  			   }
@@ -159,7 +159,7 @@ public class CreateAccount extends BorderPane {
 	  	 {
 	  		 Menu menu = null;
 			 try {
-				 menu = new Menu();
+				 menu = new Menu(primaryStage);
 			 } catch (FileNotFoundException | URISyntaxException e) {
 				 e.printStackTrace();
 			 }
