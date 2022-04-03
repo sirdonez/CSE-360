@@ -512,6 +512,7 @@ public class Menu extends BorderPane {
 
             ArrayList<MenuList> search = new ArrayList<MenuList>();
             ArrayList<MenuList> found = new ArrayList<MenuList>();
+            ArrayList<MenuList> found1 = new ArrayList<MenuList>();
 
             if (searchTextField.getText().equals("")) {
 
@@ -520,6 +521,7 @@ public class Menu extends BorderPane {
                 drinkItems.clear();
 
                 try {
+
                     food();
                     drink();
                     display();
@@ -543,13 +545,14 @@ public class Menu extends BorderPane {
                     if (search.get(i).toString().contains(searchTextField.getText())) {
 
                         found.add(search.get(i));
-                        System.out.println(search.get(i).toString());
 
                     }
                 }
 
+                foodItems.clear();
                 foodItems = found;
 
+               
                 search = drinkItems;
 
 
@@ -557,13 +560,15 @@ public class Menu extends BorderPane {
 
                     if (search.get(i).toString().contains(searchTextField.getText())) {
 
-                        found.add(search.get(i));
-                        System.out.println(search.get(i).toString());
+                        found1.add(search.get(i));
 
                     }
                 }
 
-                drinkItems = found;
+                drinkItems.clear();
+                drinkItems = found1;
+
+
                 mainPaneInScroll.getChildren().clear();
 
                 try {
