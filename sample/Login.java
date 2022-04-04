@@ -27,8 +27,11 @@ public class Login extends Application {
     private Button createAccButton;
     private Button cancelAccountButton;
     
-    //Find a way to share one accountList object amongst all the classes
-	private ArrayList<Account> accountList;
+    private ArrayList<Account> accountList;
+	private Account logIn;
+	private ArrayList<MenuList> shoppingCart; 
+	
+	
 	private Stage mainStage;
 
 
@@ -38,10 +41,15 @@ public class Login extends Application {
     	StackPane root = new StackPane();
 
     	//for test
-        Account newAccount = new Account("S", "S", "deezNuts@gmail.com", true);
+        Account newAccount = new Account("S", "S", "deezNuts@gmail.com", false);
         this.accountList = new ArrayList<Account>();
         this.accountList.add(newAccount);
 
+        Account adminAccount = new Account("N", "N", "deezNuts@gmail.com", true);
+        this.accountList.add(adminAccount);
+        
+        shoppingCart = new ArrayList<MenuList>();
+        
 
         //Main VBox
         VBox mainVBox = new VBox();
@@ -111,13 +119,16 @@ public class Login extends Application {
 
              }
     		 
-             else if(searchAccounts(usernameTextField.getText(), passwordTextField.getText())) {
+             else if(searchAccounts(usernameTextField.getText(), passwordTextField.getText())!=null) {
 
             	 //Login and go to some page
             	 incorrectLoginInfoLabel.setText("Correct Password");
 				 Menu menu = null;
+				 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
+				 //if(logIn.getAccountType() == true){
+				 
 				 try {
-					 menu = new Menu(mainStage);
+					 menu = new Menu(mainStage, accountList, logIn, shoppingCart);
 				 } catch (FileNotFoundException | URISyntaxException e) {
 					 e.printStackTrace();
 				 }
@@ -146,8 +157,8 @@ public class Login extends Application {
     	 {
     		 public void handle(ActionEvent buttonClick) 
     	  	 {
-    			 
-    			 CreateAccount testing = new CreateAccount(mainStage);
+    			 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
+    			 CreateAccount testing = new CreateAccount(mainStage, accountList, logIn, shoppingCart);
     			 Scene scene = new Scene(testing, 900, 400);
     			 mainStage.setScene(scene); 
     			 
@@ -162,9 +173,8 @@ public class Login extends Application {
 		{
 			Menu menu = null;
 
-
 			try {
-				menu = new Menu(mainStage);
+				menu = new Menu(mainStage, accountList, logIn, shoppingCart);
 			} catch (FileNotFoundException | URISyntaxException e) {
 				e.printStackTrace();
 			}
@@ -180,7 +190,7 @@ public class Login extends Application {
 	}
 
 
-    	 public boolean searchAccounts(String username, String password) {
+    	 public Account searchAccounts(String username, String password) {
 
     			boolean isFound = false;
     			int i = 0;
@@ -190,15 +200,14 @@ public class Login extends Application {
     				if(accountList.get(i).getUsername().equals(username) && accountList.get(i).getPassword().equals(password)) {
 
     					isFound = true;
+    					return accountList.get(i);
 
     				}
     				
     				i++;
 
     			}
-    			
-    			return isFound;
-
+    			return null;
     	 }
 
     

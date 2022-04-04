@@ -23,7 +23,7 @@ import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
-public class ReviewOrder extends VBox{
+public class CustomerReviewOrder extends VBox{
 	
 	
 	private Label linePositionLabel;
@@ -59,7 +59,7 @@ public class ReviewOrder extends VBox{
 	private Stage primaryStage;
 	
 	
-	public ReviewOrder(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) { // NEW
+	public CustomerReviewOrder(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) { // NEW
 
 		primaryStage = stage;
 
@@ -71,8 +71,6 @@ public class ReviewOrder extends VBox{
 	    title = new Text("Check Out");
 		coupon = "1234";
 		totalPrice = 0;
-		int rand = (int)Math.floor(Math.random()*(20-15+1)+15);
-		int position = (int)Math.floor(Math.random()*(20-0+1)+0);
 		
 		
 		for(int i = 0; i < shoppingCart.size(); i++) {
@@ -84,8 +82,9 @@ public class ReviewOrder extends VBox{
 		
 		//items = "2 Number nine(s)\n1 Number nine(s) Large";
 		orderListLabel = new Label(items);
-		linePositionLabel = new Label("Spot in Line: "+position);
-		waitTimeLabel = new Label("Wait Time: "+rand);
+		linePositionLabel = new Label("Spot in Line: ");
+		totalPriceLabel= new Label("Total Price: $" + totalPrice);
+		waitTimeLabel = new Label("Wait Time: ");
 		itemListLabel = new Label("Items:");
 		couponsLabel = new Label("Enter Coupon:");
 		couponSuccess = new Label("");
@@ -259,3 +258,4 @@ public class ReviewOrder extends VBox{
 	}
 			
 }
+
