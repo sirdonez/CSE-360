@@ -34,6 +34,11 @@ public class ReviewOrder extends VBox{
 	private Label couponsLabel;
 	private Label couponSuccess;
 	private Label paySuccess;
+	private Label paymentLabel;
+	private Label phoneNumberLabel;
+	private Label payInfoSuccess;
+	private Label phoneNumberSuccess;
+	
 	
 	private TextField couponsInput;
 	private TextField paymentInfoInput;
@@ -44,13 +49,17 @@ public class ReviewOrder extends VBox{
 	private Button backButton; 
 	private Button addCoupon;
 	private Button quitButton;
+	private Button enterPayButton;
+	private Button enterPhoneButton;
+	
 	private double totalPrice;
-	//private int linePosition;
 	private int waitTime;
 	
 	private ArrayList<Account> accountList;
 	private Account logIn;
 	private ArrayList<MenuList> shoppingCart; 
+	private ArrayList<CouponList> couponList;
+	private MenuList temp;
 	
 	private Text title;
 	private String items;
@@ -59,22 +68,26 @@ public class ReviewOrder extends VBox{
 	private Stage primaryStage;
 	
 	
-
-	public ReviewOrder(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) { // NEW
+	public ReviewOrder(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart, ArrayList<CouponList> couponList) throws URISyntaxException { // NEW
 
 		primaryStage = stage;
 
 		this.shoppingCart = shoppingCart;
 		this.accountList = accountList;
 		this.logIn = logIn;
+		Image image = new Image(getClass().getResource("/sample/newitemm.png").toURI().toString());
+		this.temp = new MenuList("flan", null, 22, image);
+		this.shoppingCart.add(temp);
+		
+		this.couponList = couponList;
 		
 		
 	    title = new Text("Check Out");
-		coupon = "1234";
+		coupon = "coupon1";
 		totalPrice = 0;
 		int rand = (int)Math.floor(Math.random()*(20-15+1)+15);
 		int position = (int)Math.floor(Math.random()*(20-0+1)+0);
-		
+		items = "";
 		
 		for(int i = 0; i < shoppingCart.size(); i++) {
 			
@@ -88,12 +101,22 @@ public class ReviewOrder extends VBox{
 
 		orderListLabel = new Label(items);
 		linePositionLabel = new Label("Spot in Line: "+position);
-		waitTimeLabel = new Label("Wait Time: "+rand);
+		waitTimeLabel = new Label("Wait Time: "+rand+" min");
+		totalPriceLabel= new Label("Total Price: $" + totalPrice);
 		itemListLabel = new Label("Items:");
 
 		couponsLabel = new Label("Enter Coupon:");
+		phoneNumberLabel = new Label("Enter Phone # ");
+		paymentLabel = new Label("Enter Payment Information:");
+		payInfoSuccess = new Label("");
+		phoneNumberSuccess = new Label("");
 		couponSuccess = new Label("");
+		paymentInfoInput = new TextField();
+		phoneNumberInput = new TextField();
 		couponsInput = new TextField("Ex: 1234");
+		
+		enterPayButton = new Button("Enter");
+		enterPhoneButton = new Button("Enter");
 
 		payButton = new Button("PAY");
 		this.payButton.setOnAction(new payButtonHandler());
@@ -111,6 +134,7 @@ public class ReviewOrder extends VBox{
 		quitButton = new Button("QUIT");
 
 		this.quitButton.setOnAction(new quitButtonHandler());
+		
 		
 		
 		
@@ -142,8 +166,15 @@ public class ReviewOrder extends VBox{
 		timeBox.setHgap(10);
 	    timeBox.setVgap(2);
 	    timeBox.setPadding(new Insets(10));
-		timeBox.add(linePositionLabel, 0, 0);
-		timeBox.add(waitTimeLabel, 0,1);
+	    timeBox.add(phoneNumberLabel, 0, 0);
+	    timeBox.add(phoneNumberInput, 1, 0);
+	    timeBox.add(phoneNumberSuccess, 2, 0);
+	    timeBox.add(paymentLabel, 0, 1);
+	    timeBox.add(paymentInfoInput, 1, 1);
+	    timeBox.add(paySuccess, 2, 1);
+		timeBox.add(linePositionLabel, 0, 2);
+		timeBox.add(waitTimeLabel, 0,3);
+		
 		
 		HBox payBox = new HBox();
 		payBox.setPadding(new Insets(10));
@@ -153,7 +184,7 @@ public class ReviewOrder extends VBox{
 		root.getChildren().addAll(title,quitButton,itemLabelBox,orderListBox, couponBox, timeBox, payBox);
 		
 		Scene scene = new Scene(root, 900, 400);
-		primaryStage.setTitle("Review Order");
+		primaryStage.setTitle("Check Out");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
@@ -165,26 +196,38 @@ public class ReviewOrder extends VBox{
     {
     	 public void handle(ActionEvent buttonClick) 
     	 {
-    		 if(couponsInput.getText().equals(""))
-             {
-    			 couponSuccess.setText("Invalid Coupon or Empty Field!");
-             }
     		 
-             else if(couponsInput.getText().equals(coupon))
-             {
-            	 //Login and go to some page
-            	 couponSuccess.setText("Coupon Succesfully Added!");
-            	 totalPriceLabel.setText("Total Price: $" + (totalPrice-1));
-             }            
-    		 
-             else
-             {
-            	 couponSuccess.setText("Invalid Coupon or Empty Field!");
-             }
+				String coupon = "";
+				boolean found = false;
+				double discount = 0;
+				for (int i = 0; i < couponList.size(); i++) {
 
-    	 }
-    	 
-    }
+					coupon = couponList.get(i).getName();
+					// System.out.println(coupon);
+					if (coupon.equals(couponsInput.getText())) {
+						found = true;
+						discount = couponList.get(i).getdiscount();
+						totalPrice -= discount;
+					}
+				}
+
+				if (found == false) {
+					couponSuccess.setText("Invalid Coupon or Empty Field!");
+				}
+
+				else if (found == true) {
+					// Login and go to some page
+					couponSuccess.setText("Coupon Succesfully Added!");
+					totalPriceLabel.setText("Total Price: $" + (totalPrice));
+				}
+
+				else {
+					couponSuccess.setText("Invalid Coupon or Empty Field!");
+				}
+
+			}
+
+		}
 	
 	private class payButtonHandler implements EventHandler<ActionEvent> {
 
@@ -194,8 +237,9 @@ public class ReviewOrder extends VBox{
     	    		 items = "";
     	    		 
     	    		 shoppingCart.clear();
-    	    		 orderListLabel.setText(items);
-    	    		 totalPriceLabel.setText("" + totalPrice);
+    	    		 orderListLabel.setText("");
+    	    		 totalPriceLabel.setText(""+totalPrice);
+
     	    	 }
     	    }
 	
@@ -224,7 +268,7 @@ public class ReviewOrder extends VBox{
 					Menu menu = null;
 
 					try {
-						menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
+						menu = new Menu(primaryStage, accountList, logIn, shoppingCart, couponList);
 					} catch (FileNotFoundException | URISyntaxException e) {
 						e.printStackTrace();
 					}

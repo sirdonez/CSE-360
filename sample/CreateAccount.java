@@ -48,14 +48,17 @@ public class CreateAccount extends BorderPane {
 	private ArrayList<Account> aList;
 	private Account aTest;
 
-
+	
 	private ArrayList<Account> accountList;
 	private Account logIn;
-	private ArrayList<MenuList> shoppingCart;
+	private ArrayList<MenuList> shoppingCart; 
+	private ArrayList<CouponList> couponList;
 
 	private Stage primaryStage;
+	
+	public CreateAccount(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart, ArrayList<CouponList> couponList)
+	{
 
-	public CreateAccount(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) {
 		this.primaryStage = stage;
 
 		test = new Login();
@@ -63,9 +66,11 @@ public class CreateAccount extends BorderPane {
 		aTest = new Account("", "", "", false);
 
 		this.accountList = accountList;
+		this.couponList = couponList;
+		
+		error = new HBox(4);   
+		title = new HBox(4);   
 
-		error = new HBox(4);
-		title = new HBox(4);
 		//base = new BorderPane();
 		optionButtons = new TilePane(Orientation.HORIZONTAL);
 		dataInput = new GridPane();
@@ -117,39 +122,69 @@ public class CreateAccount extends BorderPane {
 		optionButtons.setAlignment(Pos.BASELINE_RIGHT);
 
 	}
+	
+	
 
+	private class createAccountButtonHandler implements EventHandler<ActionEvent> 
+	  {
+	  	 public void handle(ActionEvent buttonClick) 
+	  	 {
+	  		 if(userNameTextField.getText().equals("") || passWordTextField.getText().equals("") || emailTextField.getText().equals("") 
+	  			|| cardNumberTextField.getText().equals(""))
+	           {
+	  			 incorrectLabel.setText("Please fill all fields.");
+	           }
+	           else
+	           {
+	        	   String username = userNameTextField.getText();
+	        	   String password = passWordTextField.getText();
+	        	   String email = emailTextField.getText();
+	        	   int cardNumber = Integer.parseInt(cardNumberTextField.getText());
+	        	   
+	        	   aTest.setUserName(username);
+	        	   aTest.setPassword(password);
+	        	   aTest.setEmail(email);
+	        	   aTest.setCreditCardNumber(cardNumber);
+	        	   aList.add(aTest);
+	        	   incorrectLabel.setText("Account has been created!"); 
+	        	   Menu menu = null;
+	  			   try {
+	  				   menu = new Menu(primaryStage, accountList, logIn, shoppingCart, couponList);
+	  			   } catch (FileNotFoundException | URISyntaxException e) {
+	  				 e.printStackTrace();
+	  			   }
+	  			   Scene scene = new Scene(menu, 900, 400);
+ 
+   	  			   Color color = Color.rgb(186,255,245);
+	  			   BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+	  			   Background background = new Background(backgroundFill);
+	  			   menu.setBackground(background);
+	  			   primaryStage.setScene(scene);
+	           }
 
-	private class createAccountButtonHandler implements EventHandler<ActionEvent> {
-		public void handle(ActionEvent buttonClick) {
-			if (userNameTextField.getText().equals("") || passWordTextField.getText().equals("") || emailTextField.getText().equals("")
-					|| cardNumberTextField.getText().equals("")) {
-				incorrectLabel.setText("Please fill all fields.");
-			} else {
-				String username = userNameTextField.getText();
-				String password = passWordTextField.getText();
-				String email = emailTextField.getText();
-				int cardNumber = Integer.parseInt(cardNumberTextField.getText());
+	  	 }
+	  }
+	  
+	  private class cancelButtonHandler implements EventHandler<ActionEvent> 
+	  {
+	  	 public void handle(ActionEvent buttonClick) 
+	  	 {
+	  		 Menu menu = null;
+			 try {
+				 menu = new Menu(primaryStage, accountList, logIn, shoppingCart, couponList);
+			 } catch (FileNotFoundException | URISyntaxException e) {
+				 e.printStackTrace();
+			 }
+			 Scene scene = new Scene(menu, 900, 400);
 
-				aTest.setUserName(username);
-				aTest.setPassword(password);
-				aTest.setEmail(email);
-				aTest.setCreditCardNumber(cardNumber);
-				aList.add(aTest);
-				incorrectLabel.setText("Account has been created!");
-				Menu menu = null;
-				try {
-					menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
-				} catch (FileNotFoundException | URISyntaxException e) {
-					e.printStackTrace();
-				}
-				Scene scene = new Scene(menu, 900, 400);
+			 Color color = Color.rgb(186,255,245);
+			 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+			 Background background = new Background(backgroundFill);
+			 menu.setBackground(background);
 
-				Color color = Color.rgb(186, 255, 245);
-				BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-				Background background = new Background(backgroundFill);
-				menu.setBackground(background);
-				primaryStage.setScene(scene);
-
+			primaryStage.setScene(scene);
+	  	 }
+	  }
 
 				// First create an object input stream with the readObject method
 				 /*  try
@@ -176,28 +211,8 @@ public class CreateAccount extends BorderPane {
 
 	           }*/
 
-			}
-		}
 
-		private class cancelButtonHandler implements EventHandler<ActionEvent> {
-			public void handle(ActionEvent buttonClick) {
-				Menu menu = null;
-				try {
-
-					menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
-				} catch (FileNotFoundException | URISyntaxException e) {
-					e.printStackTrace();
-				}
-				Scene scene = new Scene(menu, 900, 400);
-
-				Color color = Color.rgb(186, 255, 245);
-				BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-				Background background = new Background(backgroundFill);
-				menu.setBackground(background);
-
-				primaryStage.setScene(scene);
-			}
-		}
+	
 	}
 }
 

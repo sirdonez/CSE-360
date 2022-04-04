@@ -30,7 +30,11 @@ public class Login extends Application {
     private ArrayList<Account> accountList;
 	private Account logIn;
 	private ArrayList<MenuList> shoppingCart; 
+	private ArrayList<CouponList> couponList;
 	
+	private CouponList coupon1;
+	private CouponList coupon5;
+	private CouponList coupon10;
 	
 	private Stage mainStage;
 
@@ -39,6 +43,14 @@ public class Login extends Application {
 
     	mainStage = stage;
     	StackPane root = new StackPane();
+    	couponList = new ArrayList<CouponList>();
+    	
+    	coupon1 = new CouponList("coupon1", 1.00);
+		coupon5 = new CouponList("coupon5", 5.00);
+		coupon10 = new CouponList("coupon10", 10.00);
+    	this.couponList.add(coupon1);
+		this.couponList.add(coupon5);
+		this.couponList.add(coupon10);
 
     	//for test
         Account newAccount = new Account("S", "S", "deezNuts@gmail.com", false);
@@ -123,25 +135,35 @@ public class Login extends Application {
 
             	 //Login and go to some page
             	 incorrectLoginInfoLabel.setText("Correct Password");
+            	 
 				 Menu menu = null;
-				 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
-				 //if(logIn.getAccountType() == true){
+				 ifAdmin admin = null;
 				 
-				 try {
-
-					 menu = new Menu(mainStage, accountList, logIn, shoppingCart);
-				 } catch (FileNotFoundException | URISyntaxException e) {
-					 e.printStackTrace();
+				 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
+				 
+				 if(logIn.getAccountType() == true){
+					 
+					 admin = new ifAdmin(mainStage, accountList, shoppingCart, couponList);
+					 //Scene scene = new Scene(admin, 900, 400);
+					 //mainStage.setScene(scene);
+					 
 				 }
-				 Scene scene = new Scene(menu, 900, 400);
-
-				 Color color = Color.rgb(186,255,245);
-				 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-				 Background background = new Background(backgroundFill);
-				 menu.setBackground(background);
-
-				 mainStage.setScene(scene);
-
+				 else {
+					 
+					 try {
+						 menu = new Menu(mainStage, accountList, logIn, shoppingCart, couponList);
+					 } catch (FileNotFoundException | URISyntaxException e) {
+						 e.printStackTrace();
+					 }
+					 Scene scene = new Scene(menu, 900, 400);
+	
+					 Color color = Color.rgb(186,255,245);
+					 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+					 Background background = new Background(backgroundFill);
+					 menu.setBackground(background);
+					 mainStage.setScene(scene);
+					 
+				 }
 
              }
     		 
@@ -159,9 +181,8 @@ public class Login extends Application {
     	 {
     		 public void handle(ActionEvent buttonClick) 
     	  	 {
-
     			 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
-    			 CreateAccount testing = new CreateAccount(mainStage, accountList, logIn, shoppingCart);
+    			 CreateAccount testing = new CreateAccount(mainStage, accountList, logIn, shoppingCart, couponList);
     			 Scene scene = new Scene(testing, 900, 400);
     			 mainStage.setScene(scene); 
     			 
@@ -177,8 +198,7 @@ public class Login extends Application {
 			Menu menu = null;
 
 			try {
-
-				menu = new Menu(mainStage, accountList, logIn, shoppingCart);
+				menu = new Menu(mainStage, accountList, logIn, shoppingCart, couponList);
 			} catch (FileNotFoundException | URISyntaxException e) {
 				e.printStackTrace();
 			}
