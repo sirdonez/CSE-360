@@ -45,6 +45,7 @@ public class CreateAccount extends BorderPane {
 	private Login test;
 	private ArrayList<Account> aList;
 	private Account aTest;
+
 	
 	private ArrayList<Account> accountList;
 	private Account logIn;
@@ -153,6 +154,30 @@ public class CreateAccount extends BorderPane {
 	  			   Background background = new Background(backgroundFill);
 	  			   menu.setBackground(background);
 	  			   primaryStage.setScene(scene);
+	  			   
+	  			   
+	  			// First create an object input stream with the readObject method
+	  			    FileInputStream diskToStreamOfBytes
+	  			        = new FileInputStream( "AccountList.object" );
+	  			    // Construct an objectNow with the readObject method
+	  			    ObjectInputStream objectToBytes
+	  			        = new ObjectInputStream( diskToStreamOfBytes );
+	  			    // Read the entire object with the ObjectInputStream. The checked
+	  			    // exception must be caught (even though Object is a known class).
+	  			    
+	  			    try
+	  			    {
+	  			    	aList = objectToBytes.readObject( );
+	  			    }
+	  			    catch( ClassNotFoundException cnfe )
+	  			    {
+	  			      System.out.println( cnfe );
+	  			    }
+	  			    // Now cast from Object to the class that it is known to be.
+	  			    BankAccount singleAccount = (BankAccount)anyObject;
+	  			    // Close input files also.
+	  			    objectToBytes.close( );
+	  			   
 	           }
 
 	  	 }
@@ -164,6 +189,7 @@ public class CreateAccount extends BorderPane {
 	  	 {
 	  		 Menu menu = null;
 			 try {
+
 				 menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
 			 } catch (FileNotFoundException | URISyntaxException e) {
 				 e.printStackTrace();

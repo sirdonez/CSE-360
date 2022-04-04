@@ -128,6 +128,7 @@ public class Login extends Application {
 				 //if(logIn.getAccountType() == true){
 				 
 				 try {
+
 					 menu = new Menu(mainStage, accountList, logIn, shoppingCart);
 				 } catch (FileNotFoundException | URISyntaxException e) {
 					 e.printStackTrace();
@@ -140,6 +141,7 @@ public class Login extends Application {
 				 menu.setBackground(background);
 
 				 mainStage.setScene(scene);
+
 
              }
     		 
@@ -157,6 +159,7 @@ public class Login extends Application {
     	 {
     		 public void handle(ActionEvent buttonClick) 
     	  	 {
+
     			 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
     			 CreateAccount testing = new CreateAccount(mainStage, accountList, logIn, shoppingCart);
     			 Scene scene = new Scene(testing, 900, 400);
@@ -174,6 +177,7 @@ public class Login extends Application {
 			Menu menu = null;
 
 			try {
+
 				menu = new Menu(mainStage, accountList, logIn, shoppingCart);
 			} catch (FileNotFoundException | URISyntaxException e) {
 				e.printStackTrace();
