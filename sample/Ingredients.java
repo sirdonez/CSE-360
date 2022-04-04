@@ -1,12 +1,10 @@
 package sample;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class Ingredients extends BorderPane {
+public class Ingredients {
 
     ArrayList<String> ingredientsList;
     String name;
@@ -16,10 +14,6 @@ public class Ingredients extends BorderPane {
 
         this.ingredientsList = new ArrayList<String>();
         this.name = name;
-
-        VBox vbox = new VBox();
-        //vbox.
-
 
     }
 

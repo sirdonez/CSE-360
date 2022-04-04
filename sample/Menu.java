@@ -32,6 +32,7 @@ public class Menu extends BorderPane {
   private ArrayList<Account> accountList;
 	private Account logIn;
 	private ArrayList<MenuList> shoppingCart; 
+	private ArrayList<CouponList> couponList;
 
     private VBox mainPaneInScroll;
     private HBox selectAndSearchPane;
@@ -53,7 +54,7 @@ public class Menu extends BorderPane {
 
 
 
-    public Menu(Stage mainStage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) throws FileNotFoundException, URISyntaxException {
+    public Menu(Stage mainStage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart, ArrayList<CouponList> couponList) throws FileNotFoundException, URISyntaxException {
 
 
         this.mainStage = mainStage;
@@ -68,6 +69,7 @@ public class Menu extends BorderPane {
         //fill item lists
         foodItems = new ArrayList<MenuList>();
         drinkItems = new ArrayList<MenuList>();
+        this.couponList = couponList;
 
         food();
         drink();
@@ -1025,7 +1027,12 @@ public class Menu extends BorderPane {
     	public void handle(ActionEvent buttonClick) {
 
 
-    		ReviewOrder checkOut = new ReviewOrder(mainStage, accountList, logIn, shoppingCart);
+    		try {
+				ReviewOrder checkOut = new ReviewOrder(mainStage, accountList, logIn, shoppingCart, couponList);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
     	}
     	 

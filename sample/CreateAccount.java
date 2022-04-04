@@ -45,15 +45,15 @@ public class CreateAccount extends BorderPane {
 	private Login test;
 	private ArrayList<Account> aList;
 	private Account aTest;
-
 	
 	private ArrayList<Account> accountList;
 	private Account logIn;
 	private ArrayList<MenuList> shoppingCart; 
+	private ArrayList<CouponList> couponList;
 
 	private Stage primaryStage;
 	
-	public CreateAccount(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart)
+	public CreateAccount(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart, ArrayList<CouponList> couponList)
 	{
 		this.primaryStage = stage;
 		
@@ -62,6 +62,7 @@ public class CreateAccount extends BorderPane {
 		aTest = new Account("","","",false);
 		
 		this.accountList = accountList;
+		this.couponList = couponList;
 		
 		error = new HBox(4);   
 		title = new HBox(4);   
@@ -143,7 +144,7 @@ public class CreateAccount extends BorderPane {
 	        	   incorrectLabel.setText("Account has been created!"); 
 	        	   Menu menu = null;
 	  			   try {
-	  				   menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
+	  				   menu = new Menu(primaryStage, accountList, logIn, shoppingCart, couponList);
 	  			   } catch (FileNotFoundException | URISyntaxException e) {
 	  				 e.printStackTrace();
 	  			   }
@@ -154,30 +155,6 @@ public class CreateAccount extends BorderPane {
 	  			   Background background = new Background(backgroundFill);
 	  			   menu.setBackground(background);
 	  			   primaryStage.setScene(scene);
-	  			   
-	  			   
-	  			// First create an object input stream with the readObject method
-	  			    FileInputStream diskToStreamOfBytes
-	  			        = new FileInputStream( "AccountList.object" );
-	  			    // Construct an objectNow with the readObject method
-	  			    ObjectInputStream objectToBytes
-	  			        = new ObjectInputStream( diskToStreamOfBytes );
-	  			    // Read the entire object with the ObjectInputStream. The checked
-	  			    // exception must be caught (even though Object is a known class).
-	  			    
-	  			    try
-	  			    {
-	  			    	aList = objectToBytes.readObject( );
-	  			    }
-	  			    catch( ClassNotFoundException cnfe )
-	  			    {
-	  			      System.out.println( cnfe );
-	  			    }
-	  			    // Now cast from Object to the class that it is known to be.
-	  			    BankAccount singleAccount = (BankAccount)anyObject;
-	  			    // Close input files also.
-	  			    objectToBytes.close( );
-	  			   
 	           }
 
 	  	 }
@@ -189,8 +166,7 @@ public class CreateAccount extends BorderPane {
 	  	 {
 	  		 Menu menu = null;
 			 try {
-
-				 menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
+				 menu = new Menu(primaryStage, accountList, logIn, shoppingCart, couponList);
 			 } catch (FileNotFoundException | URISyntaxException e) {
 				 e.printStackTrace();
 			 }
