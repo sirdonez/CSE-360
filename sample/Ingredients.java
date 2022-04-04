@@ -2,18 +2,28 @@ package sample;
 
 import javafx.scene.image.Image;
 
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.awt.*;
 import java.util.ArrayList;
 
-public class Ingredients {
 
-    ArrayList<String> ingredientsList;
-    String name;
+public class Ingredients  {
+
+    private ArrayList<String> ingredientsList;
+    private String name;
+    private Stage mainStage;
 
 
     public Ingredients(String name) {
 
-        this.ingredientsList = new ArrayList<String>();
+
+
+        this.ingredientsList = new ArrayList<>();
         this.name = name;
+
 
     }
 
@@ -44,14 +54,14 @@ public class Ingredients {
 
     public String toString() {
 
-        String items = "";
+        String items = "\t";
 
         for(int i = 0; i < ingredientsList.size(); i++) {
 
-            items = items + ingredientsList.get(i) + "\n";
+            items = items + ingredientsList.get(i) + "\n\t";
 
         }
-        return "Ingredients:\n\t" + items;
+        return items;
     }
 
 }

@@ -2,8 +2,10 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,7 +31,7 @@ public class Menu extends BorderPane {
     private ArrayList<MenuList> drinkItems;
     
     
-  private ArrayList<Account> accountList;
+    private ArrayList<Account> accountList;
 	private Account logIn;
 	private ArrayList<MenuList> shoppingCart; 
 	private ArrayList<CouponList> couponList;
@@ -48,8 +50,12 @@ public class Menu extends BorderPane {
     private Button addFoodButton;
     private Button checkOutButton;
     private Button searchButton;
+    private Button ingredientsButton;
+
 
     Stage mainStage;
+
+    Ingredients currentIngredient;
 
 
 
@@ -201,6 +207,8 @@ public class Menu extends BorderPane {
         bread.get(0).addItem("Flour");
         bread.get(0).addItem("Oil");
 
+
+
         bread.add(new Ingredients("Blueberry"));
         bread.get(1).addItem("Blueberries");
         bread.get(1).addItem("Baking Soda");
@@ -237,7 +245,7 @@ public class Menu extends BorderPane {
         bread.get(3).addItem("Sugar");
         bread.get(3).addItem("Flour");
 
-        foodItems.add(new MenuList("Bread Loafs", bread, 2.00, image));
+        foodItems.add(new MenuList("Bread Loafs", bread, 2.00, image, "No Button"));
 
 
         //pretzels
@@ -254,7 +262,7 @@ public class Menu extends BorderPane {
         pretzel.get(0).addItem("Egg");
         pretzel.get(0).addItem("Sugar");
 
-        foodItems.add(new MenuList("Pretzel", pretzel, 2.50, image));
+        foodItems.add(new MenuList("Pretzel", pretzel, 2.50, image, "No Button"));
 
 
         //scones
@@ -285,7 +293,7 @@ public class Menu extends BorderPane {
         scones.get(1).addItem("Vanilla Extract");
         scones.get(1).addItem("Cinnamon");
 
-        foodItems.add(new MenuList("Scones", scones, 1.25, image));
+        foodItems.add(new MenuList("Scones", scones, 1.25, image, "No Button"));
 
 
         //muffins
@@ -328,7 +336,7 @@ public class Menu extends BorderPane {
         Muffins.get(2).addItem("Chocolate Chip");
         Muffins.get(2).addItem("Brown Sugar");
 
-        foodItems.add(new MenuList("Muffins", Muffins, 4.50, image));
+        foodItems.add(new MenuList("Muffins", Muffins, 4.50, image, "No Button"));
 
 
         //cake
@@ -369,7 +377,7 @@ public class Menu extends BorderPane {
         cake.get(2).addItem("White Vinegar");
         cake.get(2).addItem("Buttermilk");
 
-        foodItems.add(new MenuList("Cake Slice or Cupcake", cake, 7.00, image));
+        foodItems.add(new MenuList("Cake Slice or Cupcake", cake, 7.00, image, "No Button"));
 
 
         //cookies
@@ -421,7 +429,7 @@ public class Menu extends BorderPane {
         cookies.get(3).addItem("M&M's");
         cookies.get(3).addItem("Pure Vanilla Extract");
 
-        foodItems.add(new MenuList("Cookies", cookies, 1.50, image));
+        foodItems.add(new MenuList("Cookies", cookies, 1.50, image, "No Button"));
 
 
         //macaroons
@@ -471,7 +479,7 @@ public class Menu extends BorderPane {
         macaroons.get(2).addItem("Almond Extract");
         macaroons.get(2).addItem("Milk");
 
-        foodItems.add(new MenuList("Macaroons", macaroons, 0.50, image));
+        foodItems.add(new MenuList("Macaroons", macaroons, 0.50, image, "No Button"));
 
 
         //donuts
@@ -562,7 +570,7 @@ public class Menu extends BorderPane {
         donuts.get(4).addItem("Heavy Cream");
         donuts.get(4).addItem("Pure Vanilla Extract");
 
-        foodItems.add(new MenuList("Donuts", donuts, 1.50, image));
+        foodItems.add(new MenuList("Donuts", donuts, 1.50, image, "No Button"));
 
 
         //brownies
@@ -582,7 +590,7 @@ public class Menu extends BorderPane {
         brownies.get(0).addItem("Chocolate Frosting");
         brownies.get(0).addItem("Chocolate Chips");
 
-        foodItems.add(new MenuList("Brownies", brownies, 2.00, image));
+        foodItems.add(new MenuList("Brownies", brownies, 2.00, image, "No Button"));
 
 
         //flan
@@ -598,7 +606,7 @@ public class Menu extends BorderPane {
         flan.get(0).addItem("Eggs");
         flan.get(0).addItem("Hope");
 
-        foodItems.add(new MenuList("Flan", flan, 5.50, image));
+        foodItems.add(new MenuList("Flan", flan, 5.50, image, "No Button"));
 
 
         //pancakes
@@ -616,7 +624,7 @@ public class Menu extends BorderPane {
         pancakes.get(0).addItem("Chocolate Chips");
         pancakes.get(0).addItem("Syrup");
 
-        foodItems.add(new MenuList("Pancakes", pancakes, 9.25, image));
+        foodItems.add(new MenuList("Pancakes", pancakes, 9.25, image, "No Button"));
 
 
         //french toast
@@ -635,7 +643,7 @@ public class Menu extends BorderPane {
         frenchToast.get(0).addItem("White Bread");
         frenchToast.get(0).addItem("Syrup");
 
-        foodItems.add(new MenuList("French Toast", frenchToast, 9.25, image));
+        foodItems.add(new MenuList("French Toast", frenchToast, 9.25, image, "No Button"));
 
 
         //sandwich
@@ -648,7 +656,7 @@ public class Menu extends BorderPane {
         sandwich.get(0).addItem("Egg");
         sandwich.get(0).addItem("Bacon");
 
-        foodItems.add(new MenuList("Sandwich", sandwich, 8.75, image));
+        foodItems.add(new MenuList("Sandwich", sandwich, 8.75, image, "No Button"));
 
     }
 
@@ -679,7 +687,7 @@ public class Menu extends BorderPane {
         milk.get(5).addItem("Regular (Chosen) Milk");
         milk.get(5).addItem("Strawberry Syrup");
 
-        drinkItems.add(new MenuList("Milk", milk, 1.00, image));
+        drinkItems.add(new MenuList("Milk", milk, 1.00, image, "No Button"));
 
 
         //juice
@@ -701,7 +709,7 @@ public class Menu extends BorderPane {
         juice.get(2).addItem("Sugar");
         juice.get(2).addItem("Water");
 
-        drinkItems.add(new MenuList("Juice", juice, 0.75, image));
+        drinkItems.add(new MenuList("Juice", juice, 0.75, image, "No Button"));
 
 
         //tea
@@ -722,7 +730,7 @@ public class Menu extends BorderPane {
         tea.get(1).addItem("White Sugar");
         tea.get(1).addItem("Tea Bags");
 
-        drinkItems.add(new MenuList("Tea", tea, 1.25, image));
+        drinkItems.add(new MenuList("Tea", tea, 1.25, image, "No Button"));
 
 
         //coffee
@@ -750,7 +758,7 @@ public class Menu extends BorderPane {
         milk.get(3).addItem("Whipped Cream");
         milk.get(3).addItem("Chocolate");
 
-        drinkItems.add(new MenuList("Coffee", coffee, 1.50, image));
+        drinkItems.add(new MenuList("Coffee", coffee, 1.50, image, "No Button"));
 
 
         //cider
@@ -765,7 +773,7 @@ public class Menu extends BorderPane {
         cider.get(0).addItem("Cinnamon");
         cider.get(0).addItem("Ground Allspice");
 
-        drinkItems.add(new MenuList("Cider", cider, 1.25, image));;
+        drinkItems.add(new MenuList("Cider", cider, 1.25, image, "No Button"));;
 
 
         //water
@@ -776,7 +784,7 @@ public class Menu extends BorderPane {
         water.add(new Ingredients(("Cup of Water")));
         water.get(0).addItem("Water");
 
-        drinkItems.add(new MenuList("Water", water, 0, image));
+        drinkItems.add(new MenuList("Water", water, 0, image, "No Button"));
 
 
     }
@@ -818,6 +826,8 @@ public class Menu extends BorderPane {
         SpinnerValueFactory<Integer> valueFactory;
 
 
+        int count = 0;
+
         //format loop to display food items
         for (int i = 0; i < foodItems.size(); i++) {
 
@@ -837,15 +847,21 @@ public class Menu extends BorderPane {
 
 
             //ingredients button
-            Button ingredients = new Button("Ingredients");
-            ingredients.setFont(Font.font("Cambria",20));
-            ingredients.setShape(new Circle(1,1,1));
-            ingredients.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            ingredientsButton = new Button("Ingredients");
+            ingredientsButton.setFont(Font.font("Cambria",20));
+            ingredientsButton.setShape(new Circle(1,1,1));
+            ingredientsButton.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            ingredientsButton.setOnAction(new ingredientsButtonHandler());
+
+            ingredientsButton.setId(String.valueOf(count));
+            String id = ingredientsButton.getId();
+            foodItems.get(i).setButton(id);
+            count++;
 
 
             //price
             priceBox = new VBox();
-            priceBox.getChildren().addAll(ingredients,price.get(i));
+            priceBox.getChildren().addAll(ingredientsButton, price.get(i));
             priceBox.setSpacing(5);
 
             //items
@@ -902,15 +918,22 @@ public class Menu extends BorderPane {
 
 
             //ingredients button
-            Button ingredients = new Button("Ingredients");
-            ingredients.setFont(Font.font("Cambria",20));
-            ingredients.setShape(new Circle(1,1,1));
-            ingredients.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            ingredientsButton = new Button("Ingredients");
+            ingredientsButton.setFont(Font.font("Cambria",20));
+            ingredientsButton.setShape(new Circle(1,1,1));
+            ingredientsButton.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            ingredientsButton.setOnAction(new ingredientsButtonHandler());
+
+            ingredientsButton.setId(String.valueOf(count));
+            String id = ingredientsButton.getId();
+            drinkItems.get(i).setButton(id);
+
+            count++;
 
 
             //price
             priceBox = new VBox();
-            priceBox.getChildren().addAll(ingredients,priceDrinks.get(i));
+            priceBox.getChildren().addAll(ingredientsButton, priceDrinks.get(i));
             priceBox.setSpacing(5);
 
             //items
@@ -985,7 +1008,6 @@ public class Menu extends BorderPane {
                     if (search.get(i).toString().contains(searchTextField.getText())) {
 
                         found.add(search.get(i));
-                        System.out.println(search.get(i).toString());
 
                     }
                 }
@@ -1000,7 +1022,6 @@ public class Menu extends BorderPane {
                     if (search.get(i).toString().contains(searchTextField.getText())) {
 
                         found1.add(search.get(i));
-                        System.out.println(search.get(i).toString());
 
                     }
                 }
@@ -1036,6 +1057,50 @@ public class Menu extends BorderPane {
 
     	}
     	 
+    }
+
+
+
+    private class ingredientsButtonHandler implements EventHandler<ActionEvent> {
+
+        public void handle(ActionEvent buttonClick) {
+
+            Button btn = (Button) buttonClick.getSource();
+            String id = btn.getId();
+
+            ArrayList<MenuList> menuLists = new ArrayList<MenuList>();
+
+            int index = -1;
+
+            for (int i = 0; i < foodItems.size(); i++) {
+
+                if (id.equals(foodItems.get(i).getButton())) {
+
+                    menuLists = foodItems;
+                    index = i;
+                }
+            }
+            for (int i = 0; i < drinkItems.size(); i++) {
+
+                if (id.equals(drinkItems.get(i).getButton())) {
+
+                    menuLists = drinkItems;
+                    index = i;
+                }
+            }
+
+            IngredientsPane ingredientsPane = new IngredientsPane(mainStage, menuLists, index, accountList, logIn, shoppingCart);
+            Scene scene = new Scene(ingredientsPane, 900, 400);
+
+            Color color = Color.rgb(186,255,245);
+            BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+            Background background = new Background(backgroundFill);
+            ingredientsPane.setBackground(background);
+
+            mainStage.setScene(scene);
+
+        }
+
     }
 
 }

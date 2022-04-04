@@ -97,12 +97,14 @@ public class ReviewOrder extends VBox{
 		
 		
 		//items = "2 Number nine(s)\n1 Number nine(s) Large";
+		totalPriceLabel = new Label();
+
 		orderListLabel = new Label(items);
 		linePositionLabel = new Label("Spot in Line: "+position);
 		waitTimeLabel = new Label("Wait Time: "+rand+" min");
 		totalPriceLabel= new Label("Total Price: $" + totalPrice);
 		itemListLabel = new Label("Items:");
-		
+
 		couponsLabel = new Label("Enter Coupon:");
 		phoneNumberLabel = new Label("Enter Phone # ");
 		paymentLabel = new Label("Enter Payment Information:");
@@ -113,19 +115,24 @@ public class ReviewOrder extends VBox{
 		phoneNumberInput = new TextField();
 		couponsInput = new TextField("Ex: 1234");
 		
-		
 		enterPayButton = new Button("Enter");
 		enterPhoneButton = new Button("Enter");
+
 		payButton = new Button("PAY");
 		this.payButton.setOnAction(new payButtonHandler());
+
 		paySuccess = new Label("");
 		deleteButton = new Button("Delete Item(s)");
+
 		this.deleteButton.setOnAction(new deleteButtonHandler());
 		backButton = new Button("Back");
+
 		this.backButton.setOnAction(new backButtonHandler());
 		addCoupon = new Button("Add Coupon");
+
 		this.addCoupon.setOnAction(new addCouponHandler());
 		quitButton = new Button("QUIT");
+
 		this.quitButton.setOnAction(new quitButtonHandler());
 		
 		
@@ -148,7 +155,7 @@ public class ReviewOrder extends VBox{
 	    orderListBox.setVgap(7);
 	    orderListBox.setPadding(new Insets(10,0,5,15));
 		orderListBox.add(orderListLabel, 0, 0);
-		orderListBox.add(totalPriceLabel, 0,3);
+		//orderListBox.add(totalPriceLabel, 0,3);
 		
 		HBox couponBox = new HBox();
 		couponBox.setPadding(new Insets(10));
@@ -222,8 +229,8 @@ public class ReviewOrder extends VBox{
 
 		}
 	
-	private class payButtonHandler implements EventHandler<ActionEvent> 
-    	    {
+	private class payButtonHandler implements EventHandler<ActionEvent> {
+
     	    	 public void handle(ActionEvent buttonClick) 
     	    	 {
     	    		 paySuccess.setText("Payment Successful!");
@@ -232,6 +239,7 @@ public class ReviewOrder extends VBox{
     	    		 shoppingCart.clear();
     	    		 orderListLabel.setText("");
     	    		 totalPriceLabel.setText(""+totalPrice);
+
     	    	 }
     	    }
 	
