@@ -116,24 +116,7 @@ public class MenuList {
         return name + "\n\t" + flavorsString + "\n";
     }
     
-    public void setName(String name) {
-
-        this.name = name;
-
-    }
-
-
-    public void setPrice(double price) {
-
-        this.price = price;
-
-    }
-
-    public void setPicture(Image image) {
-
-        this.picture = image;
-
-    }
+    
     
     public void setIngredient(ArrayList<Ingredients> in) {
     	this.flavors = in;

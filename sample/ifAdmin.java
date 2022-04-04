@@ -249,7 +249,7 @@ public class ifAdmin extends VBox {
 			try {
 				 
 				 Image image = new Image(getClass().getResource("/sample/newitemm.png").toURI().toString());
-				 test2 = new MenuList(name, null, price, image);
+				 test2 = new MenuList(name, null, price, image, "");
 				 
 			 } catch (URISyntaxException e) {
 				 

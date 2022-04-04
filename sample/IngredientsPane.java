@@ -26,6 +26,7 @@ public class IngredientsPane extends BorderPane {
     private ArrayList<Account> accountList;
     private Account logIn;
     private ArrayList<MenuList> shoppingCart;
+    private ArrayList<CouponList> couponList;
 
     private Button backButton;
     private ScrollPane scrollPane;
@@ -35,7 +36,7 @@ public class IngredientsPane extends BorderPane {
 
     private Text text;
 
-    public IngredientsPane(Stage stage, ArrayList<MenuList> menuLists, int index, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) {
+    public IngredientsPane(Stage stage, ArrayList<MenuList> menuLists, int index, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart, ArrayList<CouponList> couponList) {
 
         this.mainStage = stage;
         this.menuLists = menuLists;
@@ -43,6 +44,8 @@ public class IngredientsPane extends BorderPane {
         this.accountList = accountList;
         this.logIn = logIn;
         this.shoppingCart = shoppingCart;
+        
+        this.couponList = couponList;
 
         backButton = new Button("Back");
         backButton.setFont(Font.font("Cambria",10));
@@ -111,7 +114,7 @@ public class IngredientsPane extends BorderPane {
             Menu menu = null;
 
             try {
-                menu = new Menu(mainStage, accountList, logIn, shoppingCart);
+                menu = new Menu(mainStage, accountList, logIn, shoppingCart, couponList);
             } catch (FileNotFoundException | URISyntaxException e) {
                 e.printStackTrace();
             }

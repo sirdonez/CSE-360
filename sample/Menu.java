@@ -1089,7 +1089,7 @@ public class Menu extends BorderPane {
                 }
             }
 
-            IngredientsPane ingredientsPane = new IngredientsPane(mainStage, menuLists, index, accountList, logIn, shoppingCart);
+            IngredientsPane ingredientsPane = new IngredientsPane(mainStage, menuLists, index, accountList, logIn, shoppingCart, couponList);
             Scene scene = new Scene(ingredientsPane, 900, 400);
 
             Color color = Color.rgb(186,255,245);
