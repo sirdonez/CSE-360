@@ -45,11 +45,15 @@ public class CreateAccount extends BorderPane {
 	private Login test;
 	private ArrayList<Account> aList;
 	private Account aTest;
+
+	
 	private ArrayList<Account> accountList;
+	private Account logIn;
+	private ArrayList<MenuList> shoppingCart; 
 
 	private Stage primaryStage;
 	
-	public CreateAccount(Stage stage, ArrayList<Account> accountList)
+	public CreateAccount(Stage stage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart)
 	{
 		this.primaryStage = stage;
 		
@@ -139,7 +143,7 @@ public class CreateAccount extends BorderPane {
 	        	   incorrectLabel.setText("Account has been created!"); 
 	        	   Menu menu = null;
 	  			   try {
-	  				   menu = new Menu(primaryStage, accountList);
+	  				   menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
 	  			   } catch (FileNotFoundException | URISyntaxException e) {
 	  				 e.printStackTrace();
 	  			   }
@@ -185,7 +189,8 @@ public class CreateAccount extends BorderPane {
 	  	 {
 	  		 Menu menu = null;
 			 try {
-				 menu = new Menu(primaryStage, accountList);
+
+				 menu = new Menu(primaryStage, accountList, logIn, shoppingCart);
 			 } catch (FileNotFoundException | URISyntaxException e) {
 				 e.printStackTrace();
 			 }

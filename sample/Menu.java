@@ -27,8 +27,11 @@ public class Menu extends BorderPane {
 
     private ArrayList<MenuList> foodItems;
     private ArrayList<MenuList> drinkItems;
-    private ArrayList<MenuList> shoppingCart; //NEW
-    private ArrayList<Account> accountList;
+    
+    
+  private ArrayList<Account> accountList;
+	private Account logIn;
+	private ArrayList<MenuList> shoppingCart; 
 
     private VBox mainPaneInScroll;
     private HBox selectAndSearchPane;
@@ -49,11 +52,14 @@ public class Menu extends BorderPane {
 
 
 
-    public Menu(Stage mainStage, ArrayList<Account> accountList) throws FileNotFoundException, URISyntaxException {
+
+    public Menu(Stage mainStage, ArrayList<Account> accountList, Account logIn, ArrayList<MenuList> shoppingCart) throws FileNotFoundException, URISyntaxException {
+
 
         this.mainStage = mainStage;
         this.accountList = accountList;
-
+        this.shoppingCart = shoppingCart;
+        this.logIn = logIn;
         //main box
         mainPaneInScroll = new VBox();
         mainPaneInScroll.setMinWidth(1000);
@@ -1018,7 +1024,8 @@ public class Menu extends BorderPane {
 
     	public void handle(ActionEvent buttonClick) {
 
-    		ReviewOrder checkOut = new ReviewOrder(mainStage, accountList, shoppingCart);
+
+    		ReviewOrder checkOut = new ReviewOrder(mainStage, accountList, logIn, shoppingCart);
 
     	}
     	 
