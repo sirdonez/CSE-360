@@ -117,7 +117,7 @@ public class Login extends Application {
             	 incorrectLoginInfoLabel.setText("Correct Password");
 				 Menu menu = null;
 				 try {
-					 menu = new Menu(mainStage);
+					 menu = new Menu(mainStage, accountList);
 				 } catch (FileNotFoundException | URISyntaxException e) {
 					 e.printStackTrace();
 				 }
@@ -129,6 +129,7 @@ public class Login extends Application {
 				 menu.setBackground(background);
 
 				 mainStage.setScene(scene);
+
 
              }
     		 
@@ -147,7 +148,7 @@ public class Login extends Application {
     		 public void handle(ActionEvent buttonClick) 
     	  	 {
     			 
-    			 CreateAccount testing = new CreateAccount(mainStage);
+    			 CreateAccount testing = new CreateAccount(mainStage, accountList);
     			 Scene scene = new Scene(testing, 900, 400);
     			 mainStage.setScene(scene); 
     			 
@@ -164,7 +165,7 @@ public class Login extends Application {
 
 
 			try {
-				menu = new Menu(mainStage);
+				menu = new Menu(mainStage, accountList);
 			} catch (FileNotFoundException | URISyntaxException e) {
 				e.printStackTrace();
 			}
