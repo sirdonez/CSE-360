@@ -27,8 +27,15 @@ public class Login extends Application {
     private Button createAccButton;
     private Button cancelAccountButton;
     
-    //Find a way to share one accountList object amongst all the classes
-	private ArrayList<Account> accountList;
+    private ArrayList<Account> accountList;
+	private Account logIn;
+	private ArrayList<MenuList> shoppingCart; 
+	private ArrayList<CouponList> couponList;
+	
+	private CouponList coupon1;
+	private CouponList coupon5;
+	private CouponList coupon10;
+	
 	private Stage mainStage;
 
 
@@ -36,12 +43,25 @@ public class Login extends Application {
 
     	mainStage = stage;
     	StackPane root = new StackPane();
+    	couponList = new ArrayList<CouponList>();
+    	
+    	coupon1 = new CouponList("coupon1", 1.00);
+		coupon5 = new CouponList("coupon5", 5.00);
+		coupon10 = new CouponList("coupon10", 10.00);
+    	this.couponList.add(coupon1);
+		this.couponList.add(coupon5);
+		this.couponList.add(coupon10);
 
     	//for test
-        Account newAccount = new Account("S", "S", "deezNuts@gmail.com", true);
+        Account newAccount = new Account("S", "S", "deezNuts@gmail.com", false);
         this.accountList = new ArrayList<Account>();
         this.accountList.add(newAccount);
 
+        Account adminAccount = new Account("N", "N", "deezNuts@gmail.com", true);
+        this.accountList.add(adminAccount);
+        
+        shoppingCart = new ArrayList<MenuList>();
+        
 
         //Main VBox
         VBox mainVBox = new VBox();
@@ -111,24 +131,39 @@ public class Login extends Application {
 
              }
     		 
-             else if(searchAccounts(usernameTextField.getText(), passwordTextField.getText())) {
+             else if(searchAccounts(usernameTextField.getText(), passwordTextField.getText())!=null) {
 
             	 //Login and go to some page
             	 incorrectLoginInfoLabel.setText("Correct Password");
+            	 
 				 Menu menu = null;
-				 try {
-					 menu = new Menu(mainStage);
-				 } catch (FileNotFoundException | URISyntaxException e) {
-					 e.printStackTrace();
+				 ifAdmin admin = null;
+				 
+				 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
+				 
+				 if(logIn.getAccountType() == true){
+					 
+					 admin = new ifAdmin(mainStage, accountList, shoppingCart, couponList);
+					 //Scene scene = new Scene(admin, 900, 400);
+					 //mainStage.setScene(scene);
+					 
 				 }
-				 Scene scene = new Scene(menu, 900, 400);
-
-				 Color color = Color.rgb(186,255,245);
-				 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-				 Background background = new Background(backgroundFill);
-				 menu.setBackground(background);
-
-				 mainStage.setScene(scene);
+				 else {
+					 
+					 try {
+						 menu = new Menu(mainStage, accountList, logIn, shoppingCart, couponList);
+					 } catch (FileNotFoundException | URISyntaxException e) {
+						 e.printStackTrace();
+					 }
+					 Scene scene = new Scene(menu, 900, 400);
+	
+					 Color color = Color.rgb(186,255,245);
+					 BackgroundFill backgroundFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+					 Background background = new Background(backgroundFill);
+					 menu.setBackground(background);
+					 mainStage.setScene(scene);
+					 
+				 }
 
              }
     		 
@@ -146,8 +181,8 @@ public class Login extends Application {
     	 {
     		 public void handle(ActionEvent buttonClick) 
     	  	 {
-    			 
-    			 CreateAccount testing = new CreateAccount(mainStage);
+    			 logIn = searchAccounts(usernameTextField.getText(), passwordTextField.getText());
+    			 CreateAccount testing = new CreateAccount(mainStage, accountList, logIn, shoppingCart, couponList);
     			 Scene scene = new Scene(testing, 900, 400);
     			 mainStage.setScene(scene); 
     			 
@@ -162,9 +197,8 @@ public class Login extends Application {
 		{
 			Menu menu = null;
 
-
 			try {
-				menu = new Menu(mainStage);
+				menu = new Menu(mainStage, accountList, logIn, shoppingCart, couponList);
 			} catch (FileNotFoundException | URISyntaxException e) {
 				e.printStackTrace();
 			}
@@ -180,7 +214,7 @@ public class Login extends Application {
 	}
 
 
-    	 public boolean searchAccounts(String username, String password) {
+    	 public Account searchAccounts(String username, String password) {
 
     			boolean isFound = false;
     			int i = 0;
@@ -190,15 +224,14 @@ public class Login extends Application {
     				if(accountList.get(i).getUsername().equals(username) && accountList.get(i).getPassword().equals(password)) {
 
     					isFound = true;
+    					return accountList.get(i);
 
     				}
     				
     				i++;
 
     			}
-    			
-    			return isFound;
-
+    			return null;
     	 }
 
     
